@@ -1,0 +1,8 @@
+runtime: custom
+env: flex
+
+handlers:
+  - url: /.*
+    script: this field is required, but ignored
+
+entrypoint: 'java -jar com.example.tictactoe-all.jar'
