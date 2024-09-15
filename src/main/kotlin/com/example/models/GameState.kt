@@ -9,7 +9,9 @@ data class GameState(
     val winningPlayer: Char? = null,
     val isBoardFull: Boolean = false,
     val connectedPlayers: List<Char> = emptyList()
-){
+) {
+    fun isGameFull() = connectedPlayers.size == 2
+
     companion object {
         fun emptyField(): Array<Array<Char?>> {
             return arrayOf(

@@ -1,4 +1,5 @@
-import com.google.cloud.tools.gradle.appengine.appyaml.AppEngineAppYamlExtension
+//import com.google.cloud.tools.gradle.appengine.appyaml.AppEngineAppYamlExtension
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 
 val ktor_version: String by project
@@ -7,10 +8,10 @@ val logback_version: String by project
 
 plugins {
     id("io.ktor.plugin") version "2.3.5"
-    kotlin("jvm") version "1.9.21"
-    kotlin("plugin.serialization") version "1.9.21"
+    kotlin("jvm") version "1.9.23"
+    kotlin("plugin.serialization") version "1.9.23"
     id("com.github.johnrengelman.shadow") version "7.1.2"
-    id("com.google.cloud.tools.appengine-appyaml") version "2.4.2"
+//    id("com.google.cloud.tools.appengine-appyaml") version "2.4.2"
 }
 
 group = "com.example"
@@ -41,12 +42,23 @@ dependencies {
 }
 
 
-configure<AppEngineAppYamlExtension> {
-    stage {
-        setArtifact("build/libs/${project.name}-all.jar")
+//configure<AppEngineAppYamlExtension> {
+//    stage {
+//        setArtifact("build/libs/${project.name}-all.jar")
+//    }
+//    deploy {
+//        version = "GCLOUD_CONFIG"
+//        projectId = "GCLOUD_CONFIG"
+//    }
+//}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "18"
     }
-    deploy {
-        version = "GCLOUD_CONFIG"
-        projectId = "GCLOUD_CONFIG"
-    }
+}
+
+tasks.withType<JavaCompile> {
+    sourceCompatibility = "18"
+    targetCompatibility = "18"
 }

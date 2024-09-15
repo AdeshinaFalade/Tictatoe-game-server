@@ -10,7 +10,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.util.concurrent.ConcurrentHashMap
 
-class TicTacToeGame {
+class TicTacToeGame(val gameId: String) {
 
     private val state = MutableStateFlow(GameState())
 
@@ -23,6 +23,8 @@ class TicTacToeGame {
     init {
         state.onEach(::broadcast).launchIn(gameScope)
     }
+
+    fun isGameFull() = state.value.isGameFull()
 
     fun connectPlayer(session: WebSocketSession): Char? {
         val isPlayerX = state.value.connectedPlayers.any { it == 'X' }
@@ -73,8 +75,8 @@ class TicTacToeGame {
             val newField = it.field.also { field ->
                 field[y][x] = currentPlayer
             }
-            val isBoardFull = newField.all {it.all { it != null }}
-            if (isBoardFull){
+            val isBoardFull = newField.all { it.all { it != null } }
+            if (isBoardFull) {
                 startNewRoundDelayed()
             }
 

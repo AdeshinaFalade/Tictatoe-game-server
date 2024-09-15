@@ -1,6 +1,6 @@
 package com.example
 
-import com.example.models.TicTacToeGame
+import com.example.models.*
 import com.example.plugins.*
 import io.ktor.server.application.*
 
@@ -9,9 +9,9 @@ fun main(args: Array<String>) {
 }
 
 fun Application.module() {
-    val game = TicTacToeGame()
+    val gameManager = GameManager()
     configureSockets()
     configureSerialization()
     configureMonitoring()
-    configureRouting(game)
+    configureRouting(gameManager)
 }
